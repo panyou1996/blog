@@ -3,18 +3,18 @@ title: "Sencond"
 subtitle: ""
 date: 2024-10-29T07:46:56Z
 lastmod: 2024-10-29T07:46:56Z
-draft: true
-author: ""
+draft: false
+author: "PanYou"
 authorLink: ""
 license: ""
 
-tags: [""]
-categories: [""]
+tags: ["Virtuoso"]
+categories: ["Cadence"]
 
 featuredImage: ""
 featuredImagePreview: ""
 
-summary: ""
+summary: "This page describe how to create the fast_lvs deck for virtuoso"
 
 hiddenFromHomePage: false
 hiddenFromSearch: false
