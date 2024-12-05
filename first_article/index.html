@@ -1,0 +1,171 @@
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>SRAM Pin Format Check Deck - PanYou</title><meta name=Description content="PanYou的博客"><meta property="og:title" content="SRAM Pin Format Check Deck">
+<meta property="og:description" content="该文档介绍了SRAM引脚格式检查的流程，包括引脚和标签的检查、位置修正以及相关的API和代码示例。主要内容包括引脚名称与终端名称的比较、标签位置的修正方法，以及调试总结中提到的精度问题和nil处理。提供了相应的LISP代码来实现这些功能。"><meta property="og:type" content="article"><meta property="og:url" content="https://panyou1996.github.io/blog/first_article/"><meta property="og:image" content="https://panyou1996.github.io/blog/%E9%A6%96%E9%A1%B5%E4%B8%AD%E9%97%B4%E7%9A%84%E5%9B%BE%E7%89%87"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-12-05T13:58:43+00:00"><meta property="article:modified_time" content="2024-12-05T13:58:43+00:00"><meta property="og:site_name" content="PanYou的博客"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://panyou1996.github.io/blog/%E9%A6%96%E9%A1%B5%E4%B8%AD%E9%97%B4%E7%9A%84%E5%9B%BE%E7%89%87"><meta name=twitter:title content="SRAM Pin Format Check Deck"><meta name=twitter:description content="该文档介绍了SRAM引脚格式检查的流程，包括引脚和标签的检查、位置修正以及相关的API和代码示例。主要内容包括引脚名称与终端名称的比较、标签位置的修正方法，以及调试总结中提到的精度问题和nil处理。提供了相应的LISP代码来实现这些功能。"><meta name=application-name content="PanYou"><meta name=apple-mobile-web-app-title content="PanYou"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://panyou1996.github.io/blog/first_article/><link rel=prev href=https://panyou1996.github.io/blog/sencond/><link rel=next href=https://panyou1996.github.io/blog/content_name2/><link rel=stylesheet href=/blog/css/style.min.a558669f1aa85c3bd0ef269ab473b4097ee0507ee9d2901d19bc01ab6b6b51a2.css integrity="sha256-pVhmnxqoXDvQ7yaatHO0CX7gUH7p0pAdGbwBq2trUaI="><link rel=preload href=/blog/lib/fontawesome-free/all.min.0df5a33710e433de1f5415b1d47e4130ca7466aee5b81955f1045c4844bbb3ed.css integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=/blog/lib/fontawesome-free/all.min.0df5a33710e433de1f5415b1d47e4130ca7466aee5b81955f1045c4844bbb3ed.css integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0="></noscript><link rel=preload href=/blog/lib/animate/animate.min.5fbaeb9f8e25d7e0143bae61d4b1802c16ce7390b96ceb2d498b0d96ff4c853f.css integrity="sha256-X7rrn44l1+AUO65h1LGALBbOc5C5bOstSYsNlv9MhT8=" as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=/blog/lib/animate/animate.min.5fbaeb9f8e25d7e0143bae61d4b1802c16ce7390b96ceb2d498b0d96ff4c853f.css integrity="sha256-X7rrn44l1+AUO65h1LGALBbOc5C5bOstSYsNlv9MhT8="></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"SRAM Pin Format Check Deck","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/panyou1996.github.io\/blog\/first_article\/"},"genre":"posts","keywords":"SKILL","wordcount":366,"url":"https:\/\/panyou1996.github.io\/blog\/first_article\/","datePublished":"2024-12-05T13:58:43+00:00","dateModified":"2024-12-05T13:58:43+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"panyou"},"description":""}</script></head><body data-header-desktop=normal data-header-mobile=normal><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"light"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"light"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/blog/ title=PanYou>PanYou</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/blog/posts/>文章 </a><a class=menu-item href=/blog/tags/>标签 </a><a class=menu-item href=/blog/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw" aria-hidden=true></i>
+</a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i>
+</span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/blog/ title=PanYou>PanYou</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw" aria-hidden=true></i>
+</a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw" aria-hidden=true></i>
+</a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/blog/posts/ title>文章</a><a class=menu-item href=/blog/tags/ title>标签</a><a class=menu-item href=/blog/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">SRAM Pin Format Check Deck</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/blog/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>panyou</a></span>&nbsp;<span class=post-category>收录于 <a href=/blog/categories/i-know/><i class="far fa-folder fa-fw" aria-hidden=true></i>I KNOW</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2024-12-05>2024-12-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;约 366 字&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;预计阅读 1 分钟&nbsp;</div></div><div class=featured-image><img class=lazyload src=/blog/svg/loading.min.svg data-src="https://www.notion.so/image/https%3A%2F%2Fsubstackcdn.com%2Fimage%2Ffetch%2Ff_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep%2Fhttps%253A%252F%252Fsubstack-post-media.s3.amazonaws.com%252Fpublic%252Fimages%252F332b4f85-d52c-4239-b4c4-f5af01ed2be9_1742x1089.png?table=block&amp;id=414609e4-6ea8-4d1c-bbfe-cc4db2324756&amp;spaceId=177d11ff-f02b-4a66-b5cb-87f45266152c&amp;width=2000&amp;userId=2d31c9da-a50d-40d5-b525-750197e046a2&amp;cache=v2" data-srcset="https://www.notion.so/image/https%3A%2F%2Fsubstackcdn.com%2Fimage%2Ffetch%2Ff_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep%2Fhttps%253A%252F%252Fsubstack-post-media.s3.amazonaws.com%252Fpublic%252Fimages%252F332b4f85-d52c-4239-b4c4-f5af01ed2be9_1742x1089.png?table=block&amp;id=414609e4-6ea8-4d1c-bbfe-cc4db2324756&amp;spaceId=177d11ff-f02b-4a66-b5cb-87f45266152c&amp;width=2000&amp;userId=2d31c9da-a50d-40d5-b525-750197e046a2&amp;cache=v2, https://www.notion.so/image/https%3A%2F%2Fsubstackcdn.com%2Fimage%2Ffetch%2Ff_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep%2Fhttps%253A%252F%252Fsubstack-post-media.s3.amazonaws.com%252Fpublic%252Fimages%252F332b4f85-d52c-4239-b4c4-f5af01ed2be9_1742x1089.png?table=block&amp;id=414609e4-6ea8-4d1c-bbfe-cc4db2324756&amp;spaceId=177d11ff-f02b-4a66-b5cb-87f45266152c&amp;width=2000&amp;userId=2d31c9da-a50d-40d5-b525-750197e046a2&amp;cache=v2 1.5x, https://www.notion.so/image/https%3A%2F%2Fsubstackcdn.com%2Fimage%2Ffetch%2Ff_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep%2Fhttps%253A%252F%252Fsubstack-post-media.s3.amazonaws.com%252Fpublic%252Fimages%252F332b4f85-d52c-4239-b4c4-f5af01ed2be9_1742x1089.png?table=block&amp;id=414609e4-6ea8-4d1c-bbfe-cc4db2324756&amp;spaceId=177d11ff-f02b-4a66-b5cb-87f45266152c&amp;width=2000&amp;userId=2d31c9da-a50d-40d5-b525-750197e046a2&amp;cache=v2 2x" data-sizes=auto alt="https://www.notion.so/image/https%3A%2F%2Fsubstackcdn.com%2Fimage%2Ffetch%2Ff_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep%2Fhttps%253A%252F%252Fsubstack-post-media.s3.amazonaws.com%252Fpublic%252Fimages%252F332b4f85-d52c-4239-b4c4-f5af01ed2be9_1742x1089.png?table=block&amp;id=414609e4-6ea8-4d1c-bbfe-cc4db2324756&amp;spaceId=177d11ff-f02b-4a66-b5cb-87f45266152c&amp;width=2000&amp;userId=2d31c9da-a50d-40d5-b525-750197e046a2&amp;cache=v2" title="https://www.notion.so/image/https%3A%2F%2Fsubstackcdn.com%2Fimage%2Ffetch%2Ff_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep%2Fhttps%253A%252F%252Fsubstack-post-media.s3.amazonaws.com%252Fpublic%252Fimages%252F332b4f85-d52c-4239-b4c4-f5af01ed2be9_1742x1089.png?table=block&amp;id=414609e4-6ea8-4d1c-bbfe-cc4db2324756&amp;spaceId=177d11ff-f02b-4a66-b5cb-87f45266152c&amp;width=2000&amp;userId=2d31c9da-a50d-40d5-b525-750197e046a2&amp;cache=v2"></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#api>API</a></li><li><a href=#flow>FLOW</a></li><li><a href=#debug-summary>Debug Summary</a></li><li><a href=#code>code</a></li></ul></li></ul></nav></div></div><div class=content id=content><div class="details admonition note open"><div class="details-summary admonition-title"><i class="icon fas fa-pencil-alt fa-fw" aria-hidden=true></i>注意<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content><h2 id=target>Target</h2><blockquote><p>Net Check Pin Name = Terminal Name = Net Name = Label Name
+Label location correction Label~>xy = Pin ~> bBox ~>center</p></blockquote></div></div></div><h2 id=api>API</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-markdown data-lang=markdown><span class=line><span class=cl><span class=s>```lisp
+</span></span></span><span class=line><span class=cl><span class=s></span><span class=c1>;1. Get Pins &amp; Labels: </span>
+</span></span><span class=line><span class=cl><span class=nv>geGetSelSet</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=nv>cv</span> <span class=nf>=</span> <span class=nv>geGetEditCellView</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=nv>pins</span> <span class=nf>=</span> <span class=nv>setof</span><span class=p>(</span><span class=nv>x</span> <span class=nv>cv~&gt;shapes</span> <span class=nv>x~&gt;purpose==</span><span class=s>&#34;pin&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>labels</span> <span class=nf>=</span> <span class=nv>setof</span><span class=p>(</span><span class=nv>x</span> <span class=nv>cv~&gt;shapes</span> <span class=nv>x~&gt;objType==</span><span class=s>&#34;label&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nv>textDisplays</span> <span class=nf>=</span> <span class=nv>setof</span><span class=p>(</span><span class=nv>x</span> <span class=nv>cv~&gt;shapes</span> <span class=nv>x~&gt;objType==</span><span class=s>&#34;textDisplay&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1>;2. Get Pin Properties</span>
+</span></span><span class=line><span class=cl><span class=nv>pin_name</span> <span class=nf>=</span> <span class=nv>pins~&gt;pin~&gt;name</span>
+</span></span><span class=line><span class=cl><span class=nv>term_name</span> <span class=nf>=</span> <span class=nv>pins~&gt;pin~&gt;term~&gt;name</span>
+</span></span><span class=line><span class=cl><span class=nv>pin_center</span> <span class=nf>=</span> <span class=nc>list</span><span class=p>(</span><span class=nv>0.5*</span><span class=p>(</span><span class=nf>caar</span><span class=p>(</span><span class=nv>pin~&gt;bBox</span><span class=p>)</span> <span class=nf>+</span> <span class=nf>caadr</span><span class=p>(</span><span class=nv>pin~&gt;bBox</span><span class=p>))</span> <span class=nv>0.5*</span><span class=p>(</span><span class=nf>cadar</span><span class=p>(</span><span class=nv>pin~&gt;bBox</span><span class=p>)</span> <span class=nf>+</span> <span class=nf>cadadr</span><span class=p>(</span><span class=nv>pin~&gt;bBox</span><span class=p>)))</span>
+</span></span><span class=line><span class=cl><span class=c1>;3. Label Properties</span>
+</span></span><span class=line><span class=cl><span class=nv>label_name</span> <span class=nf>=</span> <span class=nv>label~&gt;name</span>
+</span></span><span class=line><span class=cl><span class=nv>label_xy</span> <span class=nf>=</span> <span class=nv>label~&gt;xy</span>
+</span></span><span class=line><span class=cl><span class=c1>;4. textdisplay Properties</span>
+</span></span><span class=line><span class=cl><span class=nv>textDisplayname</span> <span class=nf>=</span> <span class=nv>textDisplays~&gt;parent~&gt;pin~&gt;term~&gt;name</span>
+</span></span><span class=line><span class=cl><span class=nv>textDisplay_xy</span> <span class=nf>=</span> <span class=nv>textDisplays~&gt;xy</span>
+</span></span><span class=line><span class=cl><span class=s>```</span></span></span></code></pre></td></tr></table></div></div><h2 id=flow>FLOW</h2><div class=mermaid id=id-1></div><h2 id=debug-summary>Debug Summary</h2><ol><li>New way to find pins<div class="details admonition tip"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>Tip1<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content>purpose only find pins with layer of pin
+cadence suggest find pin with <em><strong>shape~>pin property</strong></em>
+<a href rel></a></div></div></div></li><li>Precision problem<div class="details admonition tip"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>Tip1<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content>float number == may not equal with precsion
+make a new func to compare location, <strong>difference &lt; grid is affordable</strong></div></div></div></li><li>nil problem<div class="details admonition tip"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>Tip1<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content><pre><code>&gt; - ***Error* plus: can't handle (nil + nil)**
+&gt; - add bBox == nil check
+</code></pre></div></div></div></li></ol><h2 id=code>code</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-markdown data-lang=markdown><span class=line><span class=cl>```lisp
+</span></span><span class=line><span class=cl>(procedure pinNetNameFix(cv)
+</span></span><span class=line><span class=cl>    (let (pins pin pin_name term_name)
+</span></span><span class=line><span class=cl>        ;pins = setof(x cv~&gt;shapes x~&gt;purpose==&#34;pin&#34;)
+</span></span><span class=line><span class=cl>        pins = setof(shape geGetEditCellView()~&gt;shapes shape~&gt;pin != nil)
+</span></span><span class=line><span class=cl>        println(&#34;fix netname pin location:&#34;)
+</span></span><span class=line><span class=cl>        (foreach pin pins
+</span></span><span class=line><span class=cl>            pin_name = pin~&gt;pin~&gt;name
+</span></span><span class=line><span class=cl>            term_name = pin~&gt;pin~&gt;term~&gt;name
+</span></span><span class=line><span class=cl>            (if pin_name!=term_name then
+</span></span><span class=line><span class=cl>                pin~&gt;pin~&gt;name = term_name
+</span></span><span class=line><span class=cl>                println(pin~&gt;bBox)
+</span></span><span class=line><span class=cl>            )
+</span></span><span class=line><span class=cl>        )
+</span></span><span class=line><span class=cl>        println(&#34;fix netname pin finished!&#34;)
+</span></span><span class=line><span class=cl>    )
+</span></span><span class=line><span class=cl>)
+</span></span><span class=line><span class=cl>(procedure textDisplayLocationFix(cv)
+</span></span><span class=line><span class=cl>    (let (variableName)
+</span></span><span class=line><span class=cl>        textDisplays = setof(x cv~&gt;shapes x~&gt;objType==&#34;textDisplay&#34;)
+</span></span><span class=line><span class=cl>        println(&#34;fix label xy location:&#34;)
+</span></span><span class=line><span class=cl>        (foreach textDisplay textDisplays
+</span></span><span class=line><span class=cl>            textDisplay_xy = textDisplay~&gt;xy
+</span></span><span class=line><span class=cl>            pin = textDisplay~&gt;parent
+</span></span><span class=line><span class=cl>            if(pin~&gt;bBox!=nil then
+</span></span><span class=line><span class=cl>                pin_center = list(0.5*(caar(pin~&gt;bBox) + caadr(pin~&gt;bBox)) 0.5*(cadar(pin~&gt;bBox) + cadadr(pin~&gt;bBox)))
+</span></span><span class=line><span class=cl>                (if comparexy(textDisplay_xy pin_center)==1 then
+</span></span><span class=line><span class=cl>                    textDisplay~&gt;xy = pin_center
+</span></span><span class=line><span class=cl>                    println(pin_center)
+</span></span><span class=line><span class=cl>                )
+</span></span><span class=line><span class=cl>            )
+</span></span><span class=line><span class=cl>        )
+</span></span><span class=line><span class=cl>        println(&#34;fix label xy finished!&#34;)
+</span></span><span class=line><span class=cl>    )
+</span></span><span class=line><span class=cl>)
+</span></span><span class=line><span class=cl>(procedure comparexy(xy1 xy2)
+</span></span><span class=line><span class=cl>    (let (precision x1 y1 x2 y2)
+</span></span><span class=line><span class=cl>        precision = 10000
+</span></span><span class=line><span class=cl>        x1 = round(car(xy1)*precision)
+</span></span><span class=line><span class=cl>        x2 = round(car(xy2)*precision)
+</span></span><span class=line><span class=cl>        y1 = round(cadr(xy1)*precision)
+</span></span><span class=line><span class=cl>        y2 = round(cadr(xy2)*precision)
+</span></span><span class=line><span class=cl>        (if x1==x2 <span class=err>&amp;&amp;</span> y1==y2 then
+</span></span><span class=line><span class=cl>            comparexy = 0
+</span></span><span class=line><span class=cl>        else
+</span></span><span class=line><span class=cl>         comparexy = 1
+</span></span><span class=line><span class=cl>        )
+</span></span><span class=line><span class=cl>    )
+</span></span><span class=line><span class=cl>)
+</span></span><span class=line><span class=cl>cv = geGetEditCellView()
+</span></span><span class=line><span class=cl>pinNetNameFix(cv)
+</span></span><span class=line><span class=cl>textDisplayLocationFix(cv)</span></span></code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2024-12-05</span></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://panyou1996.github.io/blog/first_article/ data-title="SRAM Pin Format Check Deck" data-hashtags=SKILL><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://panyou1996.github.io/blog/first_article/ data-hashtag=SKILL><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Linkedin" data-sharer=linkedin data-url=https://panyou1996.github.io/blog/first_article/><i class="fab fa-linkedin fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://panyou1996.github.io/blog/first_article/ data-title="SRAM Pin Format Check Deck"><i data-svg-src=/blog/lib/simple-icons/icons/line.min.svg aria-hidden=true></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://panyou1996.github.io/blog/first_article/ data-title="SRAM Pin Format Check Deck" data-image="https://www.notion.so/image/https%3A%2F%2Fsubstackcdn.com%2Fimage%2Ffetch%2Ff_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep%2Fhttps%253A%252F%252Fsubstack-post-media.s3.amazonaws.com%252Fpublic%252Fimages%252F332b4f85-d52c-4239-b4c4-f5af01ed2be9_1742x1089.png?table=block&amp;id=414609e4-6ea8-4d1c-bbfe-cc4db2324756&amp;spaceId=177d11ff-f02b-4a66-b5cb-87f45266152c&amp;width=2000&amp;userId=2d31c9da-a50d-40d5-b525-750197e046a2&amp;cache=v2"><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/blog/tags/skill/>SKILL</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>&nbsp;|&nbsp;<span><a href=/blog/>主页</a></span></section></div><div class=post-nav><a href=/blog/sencond/ class=prev rel=prev title=Sencond><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>Sencond</a>
+<a href=/blog/content_name2/ class=next rel=next title="主题文档 - bilibili Shortcode">主题文档 - bilibili Shortcode<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2022 - 2024</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/blog/ target=_blank>PanYou</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=/blog/lib/katex/katex.min.76e39bd605d45b2d1944123c66608b0c8bb9baeb70720b212571531c7cf9bc2a.css integrity="sha256-duOb1gXUWy0ZRBI8ZmCLDIu5uutwcgshJXFTHHz5vCo="><script type=text/javascript src=/blog/lib/autocomplete/autocomplete.min.ae2da1bd62c6469ee27770ad1cddf2e8296d8a7f6d85b091463e5200c5e320af.js integrity="sha256-ri2hvWLGRp7id3CtHN3y6Cltin9thbCRRj5SAMXjIK8="></script><script type=text/javascript src=/blog/lib/algoliasearch/algoliasearch-lite.umd.min.dea2f4729cf4238b0f10574de00c14c580228238317ce61f8af3a410026c552b.js integrity="sha256-3qL0cpz0I4sPEFdN4AwUxYAigjgxfOYfivOkEAJsVSs="></script><script type=text/javascript src=/blog/lib/lazysizes/lazysizes.min.3d9120fa621da6d613c1698b7014ec6bdf4620366e8f2b7b547059f4b6f6272b.js integrity="sha256-PZEg+mIdptYTwWmLcBTsa99GIDZujyt7VHBZ9Lb2Jys="></script><script type=text/javascript src=/blog/lib/clipboard/clipboard.min.e17a1d816e13c0826e0ed7febfabc3277f45571234bde0bf9120829a7169edc9.js integrity="sha256-4XodgW4TwIJuDtf+v6vDJ39FVxI0veC/kSCCmnFp7ck="></script><script type=text/javascript src=/blog/lib/sharer/sharer.min.cc31d902aa4f3fcc8bb8c81aa534a4e2103e9b11f65b9fbd5b7156e089889ceb.js integrity="sha256-zDHZAqpPP8yLuMgapTSk4hA+mxH2W5+9W3FW4ImInOs="></script><script type=text/javascript src=/blog/lib/katex/katex.min.eb18207487161674e717087c317db14ac1a62dadaecccb802499ce173bfeb739.js integrity="sha256-6xggdIcWFnTnFwh8MX2xSsGmLa2uzMuAJJnOFzv+tzk="></script><script type=text/javascript src=/blog/lib/katex/contrib/auto-render.min.cb7f4ca60ed5dc3e258415f8c7a3b46d4a93578a52adf83011f18a7f190e7602.js integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI="></script><script type=text/javascript src=/blog/lib/katex/contrib/copy-tex.min.52ce78fab4860d24ef22128a52ce24ca01368a9034457a565a1d3fccbab0ddbb.js integrity="sha256-Us54+rSGDSTvIhKKUs4kygE2ipA0RXpWWh0/zLqw3bs="></script><script type=text/javascript src=/blog/lib/katex/contrib/mhchem.min.5c0a121a8b490afc85860a522347aeb34fb508c6b23044e5d29f6b2194227b51.js integrity="sha256-XAoSGotJCvyFhgpSI0eus0+1CMayMETl0p9rIZQie1E="></script><script type=text/javascript src=/blog/lib/mermaid/mermaid.min.4c860bd34461c3ff166a85216132d7f52288105757c60fb231648b5546e188b8.js integrity="sha256-TIYL00Rhw/8WaoUhYTLX9SKIEFdXxg+yMWSLVUbhiLg="></script><script type=text/javascript>window.config={code:{copyTitle:"复制到剪贴板",maxShownLines:50},comment:{},data:{"id-1":`graph LR
+
+start-- setof func-->L21[Get All textdisplays]
+start-- setof func-->L11[Get All Pins]
+
+subgraph 1-Net Check
+L11-- if not equal-->L12[modify pin name and 
+            terminal name]
+end
+
+subgraph 2-Label Location Correction
+L21-- if not equal-->L22[fix location]
+end`},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{algoliaAppID:"",algoliaIndex:"",algoliaSearchKey:"",highlightTag:"em",maxResultLength:10,noResultsFound:"没有找到结果",snippetLength:50,type:"algolia"}}</script><script type=text/javascript src=/blog/js/theme.min.e8d2be21e46b332dc48b46049b0c07b11a65970524ed512fac5d352f19eea7a5.js integrity="sha256-6NK+IeRrMy3Ei0YEmwwHsRpllwUk7VEvrF01Lxnup6U="></script></body></html>
