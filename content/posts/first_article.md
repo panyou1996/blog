@@ -11,8 +11,8 @@ license: ""
 tags: ["SKILL"]
 categories: ["I KNOW"]
 
-featuredImage: "https://www.notion.so/image/https%3A%2F%2Fsubstackcdn.com%2Fimage%2Ffetch%2Ff_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep%2Fhttps%253A%252F%252Fsubstack-post-media.s3.amazonaws.com%252Fpublic%252Fimages%252F332b4f85-d52c-4239-b4c4-f5af01ed2be9_1742x1089.png?table=block&id=414609e4-6ea8-4d1c-bbfe-cc4db2324756&spaceId=177d11ff-f02b-4a66-b5cb-87f45266152c&width=2000&userId=2d31c9da-a50d-40d5-b525-750197e046a2&cache=v2"
-featuredImagePreview: "https://www.notion.so/image/https%3A%2F%2Fsubstackcdn.com%2Fimage%2Ffetch%2Ff_auto%2Cq_auto%3Agood%2Cfl_progressive%3Asteep%2Fhttps%253A%252F%252Fsubstack-post-media.s3.amazonaws.com%252Fpublic%252Fimages%252F332b4f85-d52c-4239-b4c4-f5af01ed2be9_1742x1089.png?table=block&id=414609e4-6ea8-4d1c-bbfe-cc4db2324756&spaceId=177d11ff-f02b-4a66-b5cb-87f45266152c&width=2000&userId=2d31c9da-a50d-40d5-b525-750197e046a2&cache=v2"
+featuredImage: "https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F332b4f85-d52c-4239-b4c4-f5af01ed2be9_1742x1089.png"
+featuredImagePreview: "https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F332b4f85-d52c-4239-b4c4-f5af01ed2be9_1742x1089.png"
 
 summary: "该文档介绍了SRAM引脚格式检查的流程，包括引脚和标签的检查、位置修正以及相关的API和代码示例。主要内容包括引脚名称与终端名称的比较、标签位置的修正方法，以及调试总结中提到的精度问题和nil处理。提供了相应的LISP代码来实现这些功能。"
 
