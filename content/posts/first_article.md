@@ -29,7 +29,7 @@ share:
 comment:
   enable: true
 ---
-{{< admonition >}}
+{{< admonition abstract>}}
 ## Target
 > Net Check Pin Name = Terminal Name = Net Name = Label Name
 > Label location correction Label~>xy = Pin ~> bBox ~>center
@@ -57,34 +57,31 @@ textDisplay_xy = textDisplays~>xy
 {{< / highlight >}}
 ## FLOW
 {{< mermaid>}}
-graph LR
-
+graph LR;
 start-- setof func-->L21[Get All textdisplays]
 start-- setof func-->L11[Get All Pins]
-
 subgraph 1-Net Check
 L11-- if not equal-->L12[modify pin name and 
             terminal name]
 end
-
 subgraph 2-Label Location Correction
 L21-- if not equal-->L22[fix location]
 end
 {{< /mermaid>}}
 ## Debug Summary
 1.  New way to find pins
-{{< admonition type=tip title="Tip1" open=false >}}
+{{< admonition type=tip title="Tip1" open=true >}}
 purpose only find pins with layer of pin
 cadence suggest find pin with ***shape~>pin property***
 {{< link herf = "https://comp.cad.cadence.narkive.com/xvAS01IF/floating-point-rouding-in-skill" >}}
 {{< /admonition >}}
 2.  Precision problem
-{{< admonition type=tip title="Tip1" open=false >}}
+{{< admonition type=tip title="Tip2" open=true >}}
 float number == may not equal with precsion
 make a new func to compare location, **difference < grid is affordable**
 {{< /admonition >}}
 3.  nil problem
-{{< admonition type=tip title="Tip1" open=false >}}
+{{< admonition type=tip title="Tip3" open=true >}}
     > - ***Error* plus: can't handle (nil + nil)**
     > - add bBox == nil check
 {{< /admonition >}}
