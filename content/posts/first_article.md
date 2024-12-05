@@ -61,11 +61,10 @@ graph LR;
 start-- setof func-->L21[Get All textdisplays]
 start-- setof func-->L11[Get All Pins]
 subgraph 1-Net Check
-L11-- if not equal-->L12[modify pin name and 
-            terminal name]
+L11-- if not equal-->L12["modify pin name and terminal name"]
 end
 subgraph 2-Label Location Correction
-L21-- if not equal-->L22[fix location]
+L21-- if not equal-->L22["fix location"]
 end
 {{< /mermaid>}}
 ## Debug Summary
