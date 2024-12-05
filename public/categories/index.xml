@@ -1,0 +1,24 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Categories - 分类 - PanYou</title>
+        <link>https://panyou1996.github.io/blog/categories/</link>
+        <description>Categories - 分类 - PanYou</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>panyouxgxg@gmail.com (PanYou)</managingEditor>
+            <webMaster>panyouxgxg@gmail.com (PanYou)</webMaster><lastBuildDate>Tue, 29 Oct 2024 07:46:56 &#43;0000</lastBuildDate><atom:link href="https://panyou1996.github.io/blog/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>Cadence</title>
+    <link>https://panyou1996.github.io/blog/categories/cadence/</link>
+    <pubDate>Tue, 29 Oct 2024 07:46:56 &#43;0000</pubDate>
+    <author>PanYou</author>
+    <guid>https://panyou1996.github.io/blog/categories/cadence/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Documentation</title>
+    <link>https://panyou1996.github.io/blog/categories/documentation/</link>
+    <pubDate>Tue, 03 Mar 2020 11:29:41 &#43;0800</pubDate>
+    <author>PanYou</author>
+    <guid>https://panyou1996.github.io/blog/categories/documentation/</guid>
+    <description><![CDATA[]]></description>
+</item>
+</channel>
+</rss>
